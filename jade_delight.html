@@ -112,6 +112,8 @@ $(document).ready(function(){ //added by me
 
   		total = $("input[name=total]").val(); 
 
+      var phoneerr = 0; //check how many characters in number are alphabets 
+
   		noerrors = 0; //catch error numbers
 
   		if(linput.length == 0){
@@ -121,16 +123,30 @@ $(document).ready(function(){ //added by me
   			$("#errLName").css("display", "none");
   		}
 
+      /*CHANGE*/
   		if(pinput.length == 0){ //check if there is a phone number 
 			$("#errPhone").css("display", "block"); 
 			noerrors++; 
   		} else if (pinput.length != 10) { //make sure the phone number is 10 digits long 
   			$("#errPhone2").css("display", "block");
   			noerrors++; 
-  		} else {
-  			$("#errPhone").css("display", "none");
-  			$("#errPhone2").css("display", "none");
-  		}
+  		} else if (pinput.length == 10){ //make sure none of the characters are letters
+        for(i = 0; i < 10; i++){ 
+          if(pinput[i] != 0 && pinput[i] != 1 && pinput[i] != 2 && pinput[i] != 3 && pinput[i] != 4 && pinput[i] != 5
+             && pinput[i] != 6 && pinput[i] != 7 && pinput[i] != 8 && pinput[i] != 9){
+                phoneerr++; //if any of the digits are not integers
+          }
+        }
+        if(phoneerr != 0){
+          $("#errPhone3").css("display", "block");
+          noerrors++; 
+        }
+      } else {
+        $("#errPhone").css("display", "none");
+        $("#errPhone2").css("display", "none");
+      }
+
+
 
   		if(dorp == "delivery"){ //if delivery, check for city and address
   			if(sinput.length == 0){
@@ -231,7 +247,7 @@ $(document).ready(function(){ //added by me
 
 <p>First Name: <input type="text"  name='fname' /></p>
 <p>Last Name*:  <input type="text"  name='lname' /></p>
-	<div id="errLName" class="errMsg" style="display:none">Please enter a last name</div>
+	<div id="errLName" class="errMsg" style="display:none">Please enter a last name</div> <!--added-->
 
 <p id="ifPick1" style="display:none">Street*: <input type="text"  name='street' /></p> <!--added a star, id and display -->
 		<div id="errStreet" class="errMsg" style="display:none">Please enter a street address</div> <!---added-->
@@ -242,6 +258,8 @@ $(document).ready(function(){ //added by me
 <p>Phone*: <input type="text"  name='phone' /></p>
 	<div id="errPhone" class="errMsg" style="display:none">Please enter a phone number</div> <!---added-->
 	<div id="errPhone2" class="errMsg" style="display:none">Please enter a 10-digit phone number</div> <!---added-->
+  <div id="errPhone3" class="errMsg" style="display:none">Please enter a valid phone number</div> <!---added-->
+
 
 <p> 
 	<input type="radio"  name="p_or_d"  value = "pickup" checked="checked"/>Pickup  
