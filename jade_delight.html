@@ -12,7 +12,11 @@
 		border:solid 1px #d20e11; 
 		width: 300px;
 		height: 20px;
+    font-family: "Gill Sans", sans-serif;
 	}
+  .citystreet{
+    display:none;
+  }
 </style>
 <body>
 <script language="javascript">
@@ -94,16 +98,14 @@ $(document).ready(function(){ //added by me
 	/*City and Street display on Delivery*/
   	$("input[name=p_or_d]").on('click', function(){ //to ensure that the street and city on display if delivery
   		if($(this).is(':checked') && $(this).val() == 'delivery'){
-  			$("#ifPick1").css("display", "block"); 
-  			$("#ifPick2").css("display", "block");  
+  			$(".citystreet").css("display", "block"); 
   		} else {
-  			$("#ifPick1").css("display", "none"); 
-  			$("#ifPick2").css("display", "none"); 
+  			$(".citystreet").css("display", "none"); 
   		}
   	});
 
   	/*Validate before form is submitted*/
-  	$("#submit").on('click', function(){ //validation 
+  	$("#submit").on('click', function(){ //validation //changed
   		linput = $("input[name=lname]").val(); //last name length 
   		pinput = $("input[name=phone]").val(); //phone number length 
   		sinput = $("input[name=street]").val(); //street number length 
@@ -125,28 +127,41 @@ $(document).ready(function(){ //added by me
 
       /*CHANGE*/
   		if(pinput.length == 0){ //check if there is a phone number 
-			$("#errPhone").css("display", "block"); 
-			noerrors++; 
+			   $("#errPhone").css("display", "block");
+         $("#errPhone2").css("display", "none");
+         $("#errPhone3").css("display", "none"); 
+			   noerrors++; 
   		} else if (pinput.length != 10) { //make sure the phone number is 10 digits long 
-  			$("#errPhone2").css("display", "block");
-  			noerrors++; 
-  		} else if (pinput.length == 10){ //make sure none of the characters are letters
-        for(i = 0; i < 10; i++){ 
-          if(pinput[i] != 0 && pinput[i] != 1 && pinput[i] != 2 && pinput[i] != 3 && pinput[i] != 4 && pinput[i] != 5
-             && pinput[i] != 6 && pinput[i] != 7 && pinput[i] != 8 && pinput[i] != 9){
-                phoneerr++; //if any of the digits are not integers
-          }
-        }
-        if(phoneerr != 0){
-          $("#errPhone3").css("display", "block");
-          noerrors++; 
-        }
-      } else {
-        $("#errPhone").css("display", "none");
+  			 $("#errPhone2").css("display", "block");
+         $("#errPhone").css("display", "none");
+         $("#errPhone3").css("display", "none"); 
+  			 noerrors++; 
+  		} else {
+        $("#errPhone").css("display", "none"); //do not display first two errors 
         $("#errPhone2").css("display", "none");
+        $("#errPhone3").css("display", "none"); 
       }
 
+      if(pinput.length == 10){ //make sure no characters are letters
+        for(i = 0; i<10; i++){
+          if(pinput[i] != 0 && pinput[i] != 1 && pinput[i] != 2 && pinput[i] != 3 && pinput[i] != 4 && pinput[i] != 5 && pinput[i] != 6 && pinput[i] != 7 && pinput[i] != 8 && pinput[i] != 9){
+            phoneerr++; //if any of the digits are not integers
+          }
+        }
 
+        if(phoneerr != 0){
+          $("#errPhone3").css("display", "block");
+          $("#errPhone2").css("display", "none");
+          $("#errPhone").css("display", "none");  
+          noerrors++; 
+        } else {
+          $("#errPhone").css("display", "none");
+          $("#errPhone2").css("display", "none");
+          $("#errPhone3").css("display", "none");
+        }
+      }
+
+      
 
   		if(dorp == "delivery"){ //if delivery, check for city and address
   			if(sinput.length == 0){
@@ -239,7 +254,7 @@ $(document).ready(function(){ //added by me
   	});
 }); 
 
-
+//add class or div 
 </script>
 
 <h1 class="main">Jade Delight</h1>
@@ -249,10 +264,10 @@ $(document).ready(function(){ //added by me
 <p>Last Name*:  <input type="text"  name='lname' /></p>
 	<div id="errLName" class="errMsg" style="display:none">Please enter a last name</div> <!--added-->
 
-<p id="ifPick1" style="display:none">Street*: <input type="text"  name='street' /></p> <!--added a star, id and display -->
+<p class="citystreet">Street*: <input type="text"  name='street' /></p> <!--added a star and class-->
 		<div id="errStreet" class="errMsg" style="display:none">Please enter a street address</div> <!---added-->
 
-<p id="ifPick2" style="display:none">City*: <input type="text"  name='city' /></p> <!--added a star, id and display -->
+<p class="citystreet">City*: <input type="text"  name='city' /></p> <!--added a star and class -->
 	<div id="errCity" class="errMsg" style="display:none">Please enter a city</div> <!---added-->
 
 <p>Phone*: <input type="text"  name='phone' /></p>

@@ -10,17 +10,17 @@
 		var quantity = localStorage.getItem("quantity"); 
 		var mItems = localStorage.getItem("items"); 
 
-		document.getElementById("ordertime").innerHTML = localStorage.getItem("ordertime");
+		document.getElementById("ordertime").innerHTML = localStorage.getItem("ordertime"); 
 		document.getElementById("displaytotal").innerHTML = localStorage.getItem("total");
 
 
 		quantity = quantity.split(" ");
 		l = quantity.length - 1;  
 		for(i = 1; i < l; i++){
-			parseInt(quantity[i]); 
+			parseInt(quantity[i]); //split string into array of integers 
 		}
 
-		mItems = mItems.split(",");
+		mItems = mItems.split(","); //split into array of items 
 
 		for(i = 1; i < l; i++){
 			if(quantity[i] != 0){ //ID quant + i = quantity[i], item + i = item[i]
@@ -36,7 +36,7 @@
 </head>
 
 <body>
-	<h1 class = "sub" align="center">Order Summary: </h1>
+	<h1 align="center" class="sub">Order Summary</h1>
 	<h2>Your Order: </h2>
 	<table>
 		<tr id="1">
@@ -63,6 +63,5 @@
 	</table>
 	<h2>Your order total is $<div id= "displaytotal" style="display:inline"></div>.</h2>
 	<h2>Your order will be ready at <div id= "ordertime" style="display:inline"></div>!</h2>
-	<h1 class = "sub">Thank you so much for ordering from Jade Delight! We hope to see you again soon!</h1>
 </body>
 </html>
